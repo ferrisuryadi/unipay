@@ -25,35 +25,5 @@
   "parameters":[],
   "policies":[
     {"vhost":"/","name":"ha","pattern":"", "definition":{"ha-mode":"all","ha-sync-mode":"automatic","ha-sync-batch-size":5}}
-  ],
-  "queues":[
-    {
-      "name":"q.user.created",
-      "vhost":"/",
-      "durable":true,
-      "auto_delete":true,
-      "arguments":{}
-    }
-  ],
-  "exchanges":[
-    {
-      "name":"e.user.created",
-      "vhost":"/",
-      "type":"topic",
-      "durable":true,
-      "auto_delete":false,
-      "internal":false,
-      "arguments":{}
-    }
-  ],
-  "bindings":[
-    {
-      "source":"e.user.created",
-      "vhost":"/",
-      "destination":"q.user.created",
-      "destination_type":"queue",
-      "routing_key":"user.created",
-      "arguments":{}
-    }
   ]
 }
