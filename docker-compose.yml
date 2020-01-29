@@ -1,17 +1,15 @@
 version: "3"
 services:
  web:
+  container_name: unipay
   hostname: unipay
   image: ferrisuryadi/unipay
   restart: unless-stopped
   ports:
   - "5000:5000"
-  environment:
-   VIRTUAL_HOST: uni-pay.co, www.uni-pay.co
-   LETSENCRYPT_HOST: uni-pay.co, www.uni-pay.co
-   LETSENCRYPT_EMAIL: ferri.suryadi@uni-pay.co
    
  db:
+  container_name: unipay-db
   hostname: unipay-db
   image: mysql:5.7.29
   restart: unless-stopped
@@ -26,26 +24,19 @@ services:
    MYSQL_PASSWORD: M4utauaja
 
  rabbit1:
+  container_name: unipay-rabbit1
   image: rabbitmq:3.8.2-management-alpine
   hostname: rabbit1
   environment:
    RABBITMQ_ERLANG_COOKIE: "By8ibYUENiMKJQ15hmPmdEoqi"
    RABBITMQ_NODENAME: rabbit1
-   VIRTUAL_HOST: rabbit.uni-pay.co, www.rabbit.uni-pay.co
-   LETSENCRYPT_HOST: rabbit.uni-pay.co, www.rabbit.uni-pay.co
-   LETSENCRYPT_EMAIL: ferri.suryadi@uni-pay.co
-  volumes:
-  - "./rabbitmq.config:/etc/rabbitmq/rabbitmq.config"
-  - "./definitions.json:/etc/rabbitmq/definitions.json"
+   RABBITMQ_DEFAULT_USER: "admin"
+   RABBITMQ_DEFAULT_PASS: "By8ibYUENiMKJQ15hmPmdEoqi"
   ports:
-  - "4369:4369"
-  - "5671:5671"
-  - "5672:5672"
   - "15671:15671"
-  - "15672:15672"
-  - "25672:25672"
 
  rabbit2:
+  container_name: unipay-rabbit2
   image: rabbitmq:3.8.2-management-alpine
   hostname: rabbit2
   depends_on:
@@ -53,11 +44,11 @@ services:
   environment:
    RABBITMQ_ERLANG_COOKIE: "By8ibYUENiMKJQ15hmPmdEoqi"
    RABBITMQ_NODENAME: rabbit2
-  volumes:
-  - "./rabbitmq.config:/etc/rabbitmq/rabbitmq.config"
-  - "./definitions.json:/etc/rabbitmq/definitions.json"
+   RABBITMQ_DEFAULT_USER: "admin"
+   RABBITMQ_DEFAULT_PASS: "By8ibYUENiMKJQ15hmPmdEoqi"
 
  rabbit3:
+  container_name: unipay-rabbit3
   image: rabbitmq:3.8.2-management-alpine
   hostname: rabbit3
   depends_on:
@@ -65,9 +56,8 @@ services:
   environment:
    RABBITMQ_ERLANG_COOKIE: "By8ibYUENiMKJQ15hmPmdEoqi"
    RABBITMQ_NODENAME: rabbit3
-  volumes:
-  - "./rabbitmq.config:/etc/rabbitmq/rabbitmq.config"
-  - "./definitions.json:/etc/rabbitmq/definitions.json"
+   RABBITMQ_DEFAULT_USER: "admin"
+   RABBITMQ_DEFAULT_PASS: "By8ibYUENiMKJQ15hmPmdEoqi"
 
 networks:
  default:
