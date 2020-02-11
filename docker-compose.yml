@@ -16,50 +16,14 @@ services:
   ports:
   - 3300:3306
   volumes:
-  - "./:/var/lib/mysql"
+  - "/root/unipay/sqldata:/var/lib/mysql"
   environment:
    MYSQL_ROOT_PASSWORD: M4utauaja
    MYSQL_DATABASE: unipay
    MYSQL_USER: root
    MYSQL_PASSWORD: M4utauaja
 
- rabbit1:
-  container_name: unipay-rabbit1
-  image: rabbitmq:3.8.2-management-alpine
-  hostname: rabbit1
-  environment:
-   RABBITMQ_ERLANG_COOKIE: "By8ibYUENiMKJQ15hmPmdEoqi"
-   RABBITMQ_NODENAME: rabbit1
-   RABBITMQ_DEFAULT_USER: "admin"
-   RABBITMQ_DEFAULT_PASS: "By8ibYUENiMKJQ15hmPmdEoqi"
-  ports:
-  - "15671:15671"
-
- rabbit2:
-  container_name: unipay-rabbit2
-  image: rabbitmq:3.8.2-management-alpine
-  hostname: rabbit2
-  depends_on:
-  - rabbit1
-  environment:
-   RABBITMQ_ERLANG_COOKIE: "By8ibYUENiMKJQ15hmPmdEoqi"
-   RABBITMQ_NODENAME: rabbit2
-   RABBITMQ_DEFAULT_USER: "admin"
-   RABBITMQ_DEFAULT_PASS: "By8ibYUENiMKJQ15hmPmdEoqi"
-
- rabbit3:
-  container_name: unipay-rabbit3
-  image: rabbitmq:3.8.2-management-alpine
-  hostname: rabbit3
-  depends_on:
-  - rabbit1
-  environment:
-   RABBITMQ_ERLANG_COOKIE: "By8ibYUENiMKJQ15hmPmdEoqi"
-   RABBITMQ_NODENAME: rabbit3
-   RABBITMQ_DEFAULT_USER: "admin"
-   RABBITMQ_DEFAULT_PASS: "By8ibYUENiMKJQ15hmPmdEoqi"
-
 networks:
- default:
-  external:
-   name: webproxy
+  default:
+    external:
+      name: webproxy
